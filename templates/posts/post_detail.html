@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <div class="row" id="detail_view_post" data-id="{{object.id}}">
+        
+        <div class="col">
+
+
+            <div class="card" style="padding: 10px; ">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <h1 id="title" data-url="{{object.slug}}">
+                                {{object.title}}
+                            </h1>
+                        </div>
+                        
+                        {% if request.user.id == object.author.id %}
+                            <div class="col-3"  style="text-align: right;">
+                                <button class="btn btn-danger"><a href="delete/" style="text-decoration: none; color:white">Eliminar</a></button>
+                            </div>
+                            <div class="col-3"  style="text-align: right;">
+                                <button class="btn btn-primary"><a href="update/" style="text-decoration: none; color:white">Editar</a></button>
+                            </div>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+                
+                
+                {% if object.thumbnail %}
+                <img src="{{object.thumbnail.url}}" style="width: 50%;" class="card-img-top align-self-center" >
+                {% endif %}
+               
+                <hr>
+                <div>
+                    <span><i class="fas fa-thumbs-up ml-5"></i>{{object.get_like_count}}</span>
+                    <span><i class="fas fa-eye ml-5"></i>{{object.get_view_count}}</span>
+                    <span id="count_comentarios"></span>
+                    <p class="card-text">
+                        Posted {{object.publish_date|timesince}} ago
+                    </p>
+                </div>
+                <hr>
+                <div style="padding: 10px;">
+                    <p>{{object.content}}</p>
+                </div>
+
+                <hr>
+
+                <div>
+                    <h4>Enjoy this post? Give it a like</h4>
+                    <button class="text-muted like" data-url="{{object.get_like_url}}" id="like">
+                        <i class="fas fa-thumbs-up" id="{{object.id}}"> {{object.get_like_count}} </i>
+                    </button>
+                    
+                    <hr>
+                    {% csrf_token %}
+                    <h4 id="comment">Leave a comment below</h4>
+
+                    {% if request.user.is_authenticated %}
+                        
+                        <form id="formulario" method="post" action="{{object.get_absolute_url}}">
+                            {% csrf_token %}
+
+                            {{form|crispy}}
+
+                            <input type="submit" id="guardar" class="btn btn-primary" data-slug="{{object.get_absolute_url}}">
+
+                        </form>     
+                        <!--
+
+                        
+                        {{form|crispy}}
+                        {% csrf_token %}
+
+                        <button class="btn btn-primary comment" data-slug="{{object.get_absolute_url}}">Comment</button>
+                        -->
+
+                        <hr>
+                    {% else %}
+
+                    <a href="{% url 'login' %}" id="button_login_comment" class="btn btn-primary btn-block" >Login to comment</a>
+
+                    {% endif %}
+                    <!--
+
+                    
+                    <div>
+                    <h5>Comments By Django Templates</h5>
+                    {% for comment in object.comments %}
+                        <div>
+                            <h5>{{comment.user.username}}</h5>
+                            <p>{{comment.content}}
+                                <br>
+                            <small>{{comment.timestamp|timesince}} ago</small>
+                            </p>
+                            
+
+                        </div>
+                    
+                        <hr>
+                    {% endfor %}</div>
+                    -->
+                    <div >
+                        <h5>
+                            Comments By AJAX
+                        </h5>
+                        <div id="comentariosbyajax">
+
+                        </div>
+
+                    </div>
+                </div>
+                
+
+            </div>
+
+        </div>
+       
+    </div>
+
+
+{% endblock content %}
+
+{% block extrajs %}
+<script src="{% static 'js/likes/likes_home.js' %}"></script>
+
+<script src="{% static 'js/comentarios/comentarios.js' %}"></script>
+<script src="{% static 'js/comentarios/main_of.js' %}"></script>
+<script src="{% static 'js/comentarios/set_url_past.js' %}"></script>
+
+
+{% endblock %}

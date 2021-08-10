@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container ">
+        <div class="row" style="width: auto; margin: auto auto;">
+            {% for object in object_list %}
+            <div class="col-12 mb-5  post">
+                
+                    
+            
+                    <div class="card justify-content-end" data-idpost="{{object.id}}" data-url="{{object.get_absolute_url}}" >
+                        {% if object.thumbnail %}
+                            <img src="{{object.thumbnail.url}}" class="card-img " style="text-align:center; width:35%; height:auto; display:block;margin:auto;">
+                        {% endif %}
+                        <div class="card-body">
+                            <a href="{{object.get_absolute_url}}" >
+                                <h5 class="card-title">{{object.title}}</h5>
+
+                            </a>
+
+                          <p class="card-text">{{object.content|truncatechars:9}}</p>
+                            
+                          <hr>
+                          <p>
+                            <span>
+                                <button class="text-muted like" data-url="{{object.get_like_url}}">
+                                    <i class="fas fa-thumbs-up" id="{{object.id}}"> {{object.get_like_count}} </i>
+                                </button>
+                            </span>
+                            <br>
+                            <span><i class="fas fa-eye"></i>{{object.get_view_count}}</span>
+                            <span><i class="fas fa-comments ml-5"></i>{{object.get_comment_count}}</span>
+                            <!--<span><i class="fas fa-thumbs-up ml-5"></i>{{object.get_like_count}}</span>
+                            <span><i class="fas fa-eye ml-5"></i>{{object.get_view_count}}</span>
+                            <span><i class="fas fa-comments ml-5"></i>{{object.get_comment_count}}</span>-->
+                            
+                          </p>
+                            <p class="card-text">
+                                Posted {{object.publish_date|timesince}} ago
+                            </p>
+                        </div>
+                      </div>
+                   
+            </div>
+            
+        {% endfor %}
+        </div>
+        
+    </div>
+
+
+{% endblock content %}
+
+<!--
+    
+-->
+{% block extrajs %}
+<script src="{% static 'js/likes/likes_home.js' %}"></script>
+<script src="{% static 'js/likes/check_url_before.js' %}"></script>
+
+
+{% endblock %}
