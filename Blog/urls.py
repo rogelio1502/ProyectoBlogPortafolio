@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls import url
 from Blog.settings.production import DEBUG
-from Blog.settings.base import MEDIA_ROOT,MEDIA_URL,STATIC_ROOT,STATIC_URL
+from Blog.settings.base import STATIC_ROOT,STATIC_URL
 from django.conf.urls.static import static
 from django.contrib.auth.views import auth_login,auth_logout
 
@@ -41,12 +41,8 @@ urlpatterns = [
     path('<slug>/delete/',PostDeleteView.as_view(),name="delete"),
     path('like/<slug>/',like,name="like"),
 ]
+urlpatterns+=static(STATIC_URL, document_root=STATIC_ROOT)
 
-"""
+
 if DEBUG == True:
     urlpatterns+=static(MEDIA_URL, document_root=MEDIA_ROOT)
-    urlpatterns+=static(STATIC_URL, document_root=STATIC_ROOT)
-
-""" 
-urlpatterns+=static(MEDIA_URL, document_root=MEDIA_ROOT)
-urlpatterns+=static(STATIC_URL, document_root=STATIC_ROOT)

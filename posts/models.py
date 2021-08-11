@@ -9,7 +9,7 @@ from usuario.models import User
 class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
-    thumbnail = models.ImageField(null=True)
+    thumbnail = models.ImageField(null=True,upload_to="posts/")
     publish_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)

@@ -42,6 +42,10 @@ INSTALLED_APPS = [
    
     'usuario',
     'posts',
+
+
+    'storages'
+
     
 ]
 SITE_ID=1
@@ -50,7 +54,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'Blog.urls'
@@ -122,17 +127,37 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
 
 #lineas de codigo
 #  que se añaden para poder manejar archivos estaticos
-STATIC_ROOT = os.path.join(BASE_DIR,'static_root')
+
 
 MEDIA_URL='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media_root')
 
+
+
+
+
+######
+AWS_ACCESS_KEY_ID = 'AKIA5KE2CNCPKY7FUQHQ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME= 'django-images-storage-rtp'
+STATIC_URL = "/static/"
 STATICFILES_DIRS=(
     os.path.join(BASE_DIR,'static'),
 )
+STATIC_ROOT = os.path.join(BASE_DIR,'static_root')
+
+AWS_S3_FILE_OVERWRITE=False
+AWS_DEFAULT_ACL=None
+
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_S3_HOST = "s3.us-east-2.amazonaws.com"
+AWS_S3_REGION_NAME = 'us-east-2'
+AWS_S3_ADDRESSING_STYLE = "virtual"
+AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 

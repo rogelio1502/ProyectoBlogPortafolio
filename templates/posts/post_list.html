@@ -6,9 +6,7 @@
         <div class="row" style="width: auto; margin: auto auto;">
             {% for object in object_list %}
             <div class="col-12 mb-5  post">
-                
-                    
-            
+                            
                     <div class="card justify-content-end" data-idpost="{{object.id}}" data-url="{{object.get_absolute_url}}" >
                         {% if object.thumbnail %}
                             <img src="{{object.thumbnail.url}}" class="card-img " style="text-align:center; width:35%; height:auto; display:block;margin:auto;">
