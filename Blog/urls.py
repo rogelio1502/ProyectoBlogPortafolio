@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls import url
 from Blog.settings.production import DEBUG
-from Blog.settings.base import STATIC_ROOT,STATIC_URL
+from Blog.settings.base import STATIC_ROOT,STATIC_URL,MEDIA_ROOT,MEDIA_URL
 from django.conf.urls.static import static
 from django.contrib.auth.views import auth_login,auth_logout
 
@@ -44,5 +44,5 @@ urlpatterns = [
 urlpatterns+=static(STATIC_URL, document_root=STATIC_ROOT)
 
 
-if DEBUG == True:
-    urlpatterns+=static(MEDIA_URL, document_root=MEDIA_ROOT)
+#if DEBUG == True:
+#    urlpatterns+=static(MEDIA_URL, document_root=MEDIA_ROOT)
