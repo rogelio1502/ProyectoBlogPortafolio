@@ -12,10 +12,10 @@ ALLOWED_HOSTS = ['djangored.herokuapp.com',"localhost"]
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd59v3pqv2kf0tm',
-        'USER':'yxbotbxczvocdy',
-        'PASSWORD':'2a8c6dc3d312157ac1800b37ef830e7742c51a635434de16878d2e715893fdc8',
-        'HOST':'ec2-3-218-149-60.compute-1.amazonaws.com',
+        'NAME': 'd2h3n5pakkup4u',
+        'USER':'ayydxznbdwlzcs',
+        'PASSWORD':'f9c9c336d4b20ad0254328a6d929dd56394e6814c30ecfe19b20d566440835fb',
+        'HOST':'ec2-34-194-130-103.compute-1.amazonaws.com',
         'PORT':'5432'
     }
 }
