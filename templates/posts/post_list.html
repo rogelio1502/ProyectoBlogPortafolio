@@ -5,19 +5,20 @@
     <div class="container ">
         <div class="row" style="width: auto; margin: auto auto;">
             {% for object in object_list %}
-            <div class="col-12 mb-5  post">
+            <div class="col-12 mb-5   post">
                             
                     <div class="card justify-content-end" data-idpost="{{object.id}}" data-url="{{object.get_absolute_url}}" >
-                        {% if object.thumbnail %}
-                            <img src="{{object.thumbnail.url}}" class="card-img " style="text-align:center; width:35%; height:auto; display:block;margin:auto;">
-                        {% endif %}
+                        
                         <div class="card-body">
-                            <a href="{{object.get_absolute_url}}" >
-                                <h5 class="card-title">{{object.title}}</h5>
+                            <a class="title-href" href="{{object.get_absolute_url}}" >
+                                <h5 class="card-title text-center">-{{object.title}}- <span>by {{object.author}}</span> </h5>
 
                             </a>
+                            {% if object.thumbnail %}
+                            <img src="{{object.thumbnail.url}}" class="card-img mt-2 mb-2" style="text-align:center; width:33%; height:auto; display:block;margin:auto;">
+                            {% endif %}
 
-                          <p class="card-text">{{object.content|truncatechars:9}}</p>
+                          <p class="card-text preview">{{object.content|truncatechars:50}}</p>
                             
                           <hr>
                           <p>

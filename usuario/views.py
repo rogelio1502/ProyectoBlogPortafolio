@@ -5,6 +5,8 @@ from usuario.forms import UserCreation
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.views import LoginView
+from django.views.generic import ListView, DetailView
+from .models import User,UserManager
 
 
 class SignUpView(generic.CreateView):
@@ -18,6 +20,10 @@ class SignUpView(generic.CreateView):
             #super().get(request, *args, **kwargs)
             return redirect('list')
         return super().get(request, *args, **kwargs)
+    
+
+            
+    
 
 class LoginView(LoginView):
     def get(self, request, *args, **kwargs):
@@ -28,3 +34,45 @@ class LoginView(LoginView):
             #print("Hola")
             return super().get(request, *args, **kwargs)
 
+
+class UserListView(ListView):
+    model = User
+    template_name = 'users/user_list.html'
+    """
+    def get_context_data(self, *args, object_list=None, **kwargs):
+        context = super().get_context_data(
+            *args, object_list=self.get_queryset(), **kwargs)
+        context.update({
+            "Saludo": "Hola mundo"
+        })
+        return context
+
+    def get_queryset(self):
+        return self.model.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        # forma 1 y personalizable
+        #print(self.get_context_data())
+        if request.is_ajax():
+            
+            #lista_usuarios = []
+            #for usuario in self.get_queryset():
+             #   data_usuario = {}
+              #  data_usuario["id"]=usuario.id
+               # data_usuario["username"]=usuario.username
+                #lista_usuarios.append(data_usuario)
+
+            #print(lista_usuarios)
+            #data = json.dumps(lista_usuarios)
+            #forma 2 no personalizable
+            
+            data = serialize('json', self.get_queryset())
+            return HttpResponse(data, 'application/json')
+        #print(self.get_context_data())
+        return render(request, self.template_name, self.get_context_data())
+    """
+
+
+class UserDetailView(DetailView):
+    model = User
+    template_name = 'users/user_detail.html'

@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+{% block content %}
+<h1>Pagina en mantenimiento</h1>
+<div class="row">
+    
+    {% for object in object_list %}
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3><a href="/users{{object.get_absolute_url}}">{{object.username}}</a></h3>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+        
+</div>
+{% endblock %}
+

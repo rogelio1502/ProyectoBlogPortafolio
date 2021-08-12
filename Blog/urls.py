@@ -17,8 +17,13 @@ from posts.views import (
     PostDeleteView,
     PostUpdateView,
     like,
-    UserListView,
     
+
+    
+)
+from usuario.views import (
+    UserListView,
+    UserDetailView,
 )
 
 urlpatterns = [
@@ -37,6 +42,7 @@ urlpatterns = [
     path('create/',PostCreateView.as_view(),name="create"),
 
     path('<slug>/',PostDetailView.as_view(),name="detail"),
+    path('users/<slug>/',UserDetailView.as_view(),name="user"),
     path('<slug>/update/',PostUpdateView.as_view(),name="update"),
     path('<slug>/delete/',PostDeleteView.as_view(),name="delete"),
     path('like/<slug>/',like,name="like"),

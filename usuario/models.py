@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+from django.urls import reverse
 
 # Create your models here.
 
@@ -42,11 +43,11 @@ class User(AbstractBaseUser):
     activo = models.BooleanField(default=True)
     administrador = models.BooleanField(default=False)
     objects = UserManager()
-
+    slug = models.SlugField()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username','nombre','apellido']
 
-
+    
     def __str__(self):
         return self.username
 
@@ -55,7 +56,13 @@ class User(AbstractBaseUser):
     def has_module_perms(self,app_label):
         return True
     
-
+    def get_absolute_url(self):
+        return reverse("detail",kwargs={
+            "slug":self.slug
+        })
+    def save(self, *args, **kwargs):
+        self.slug = self.username
+        super(User,self).save(*args, **kwargs)
     @property
     def is_staff(self):
         return self.administrador

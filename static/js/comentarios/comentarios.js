@@ -88,13 +88,44 @@ function actualizarComentarios() {
         document.getElementById("count_comentarios").innerHTML = "";
         //console.log(data.length)
         for (let i = 0; i < data.length - 1; i++) {
-            let fecha = new Date(data[i].time).toUTCString();
+            let fecha = new Date(data[i].time)
+            let recien = 0;
             let fecha_actual = Date.now()
-            fecha_actual = new Date(fecha_actual).toUTCString();
+            
+
+            let new_fecha = new Date(fecha_actual)
+            let diferencia = (new_fecha-fecha)/1000/60
+            console.log(Math.ceil(diferencia));
+            if (Math.ceil(diferencia)<=1){
+                fecha = "Just now"
+            }
+            if (diferencia>1 && diferencia<60){
+                fecha = Math.round(diferencia)+" minutes ago";
+            }else if(Math.round(Math.ceil(diferencia)/60)==1){
+                fecha = "1 hour ago";
+
+            }else if(diferencia>60 && diferencia<(60*24)){
+                fecha = Math.round(Math.ceil(diferencia)/60)+" hours ago";
+
+            }
+            
+            
+            //fecha = new Date(data[i].time).toUTCString();
+            
+            //fecha_actual = new Date(fecha_actual).toUTCString();
+
+            //console.log(fecha)
             // console.log(data[i].id_comentario+"|"+data[i].user+"|"+new Date(data[i].time).toUTCString()+"|");
             // console.log(fecha_actual);
             // console.log(data[i].content)
-            com_ajax.innerHTML += "<div class='comentarios'><h5>"+data[i].user.toUpperCase()+"</h5><p>"+data[i].content+"<br></p><p class='fecha'><small>"+fecha+"</small></p></div>"
+            if (Math.ceil(diferencia)<=1){
+                com_ajax.innerHTML += "<div class='comentarios nuevo'><h5>"+data[i].user.toUpperCase()+"</h5><p>"+data[i].content+"<br></p><p class='fecha'><small>"+fecha+"</small></p></div>"
+
+            }else{
+                com_ajax.innerHTML += "<div class='comentarios'><h5>"+data[i].user.toUpperCase()+"</h5><p>"+data[i].content+"<br></p><p class='fecha'><small>"+fecha+"</small></p></div>"
+
+            }
+
             
 
 

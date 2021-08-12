@@ -18,6 +18,10 @@ class PostListView(ListView):
     model = Post
 
 
+
+
+
+    
 class PostDetailView(DetailView):
     model = Post
     template_name = 'posts/post_detail.html'
@@ -168,16 +172,25 @@ class PostCreateView(CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.author = self.request.user
+        titulo_slug = self.object.title
+        new_slug = ""
+        for i in range(len(titulo_slug)):
+            if titulo_slug[i] in ("?","!","#","$","&","'","(",")","*",",","/",":",";","=","@","[","]","+"):
+               new_slug += "signo"
+            else:
+                new_slug += titulo_slug[i]
+        print(new_slug)
         try:
 
-            p = Post.objects.all()[0]
+            p = Post.objects.all().order_by('-id').first()
+            id_last_post = p.id+1
         except:
             id_last_post = 1
-        else:
-            id_last_post = p.id+1
+        
+            
 
         self.object.slug = str(id_last_post)+" " + \
-            str(self.object.title)+" "+str(self.object.author)
+            str(new_slug)+" "+str(self.object.author)
         # print(self.object.slug)
         self.object.save()
         return redirect("/")
@@ -228,41 +241,7 @@ class PostDeleteView(DeleteView):
 
 
 
-class UserListView(ListView):
-    model = User
-    template_name = 'ajax/users.html'
 
-    def get_context_data(self, *args, object_list=None, **kwargs):
-        context = super().get_context_data(
-            *args, object_list=self.get_queryset(), **kwargs)
-        context.update({
-            "Saludo": "Hola mundo"
-        })
-        return context
-
-    def get_queryset(self):
-        return self.model.objects.all()
-
-    def get(self, request, *args, **kwargs):
-        # forma 1 y personalizable
-        #print(self.get_context_data())
-        if request.is_ajax():
-            """
-            lista_usuarios = []
-            for usuario in self.get_queryset():
-                data_usuario = {}
-                data_usuario["id"]=usuario.id
-                data_usuario["username"]=usuario.username
-                lista_usuarios.append(data_usuario)
-
-            print(lista_usuarios)
-            data = json.dumps(lista_usuarios)
-            #forma 2 no personalizable
-            """
-            data = serialize('json', self.get_queryset())
-            return HttpResponse(data, 'application/json')
-        #print(self.get_context_data())
-        return render(request, self.template_name, self.get_context_data())
 
 
 

@@ -3,7 +3,7 @@ from .base import *
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['djangored.herokuapp.com']
+ALLOWED_HOSTS = ['djangored.herokuapp.com',"localhost"]
 
 
 # Database
