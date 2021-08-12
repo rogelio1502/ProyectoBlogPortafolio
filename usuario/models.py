@@ -43,7 +43,7 @@ class User(AbstractBaseUser):
     activo = models.BooleanField(default=True)
     administrador = models.BooleanField(default=False)
     objects = UserManager()
-    slug = models.SlugField()
+    slug = models.SlugField(null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username','nombre','apellido']
 
