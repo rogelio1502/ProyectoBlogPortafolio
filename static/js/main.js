@@ -4,7 +4,7 @@ function setCookie(cname,cvalue,ex) {
     let expires = "expires=" + d.toGMTString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
-  
+  //que pedooo
   function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
