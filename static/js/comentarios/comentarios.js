@@ -59,9 +59,9 @@ function checkComentarios() {
                 actualizarComentarios()
                 
                 //music.play();
-                document.getElementById('audio').volume=0.5;
+                document.getElementById('audio_send').volume=0.5;
 
-                document.getElementById('audio').play();
+                document.getElementById('audio_send').play();
 
                 
                 
@@ -164,6 +164,9 @@ $('#formulario').on('submit', function (e) {
         // console.log(data);
         document.getElementById("formulario").reset();
         actualizarComentarios();
+        document.getElementById('audio_send').volume=0.5;
+
+        document.getElementById('audio_send').play();
 
     }).error(function (data) {
         console.log("ERROR");
