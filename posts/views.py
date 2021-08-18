@@ -19,8 +19,6 @@ class PostListView(ListView):
 
 
 
-
-
     
 class PostDetailView(DetailView):
     model = Post
@@ -53,7 +51,18 @@ class PostDetailView(DetailView):
                 comentarios_data["user"] = i.user.username
                 comentarios_data["content"] = i.content
                 comentarios_data["time"] = i.timestamp
-
+                
+                _id = i.id
+                try:
+                    comment = Comment.objects.filter(id=_id)[0]
+                    commentView = CommentView.objects.filter(comment=comment,user=request.user)[0]
+                    #print("LLega aqui")
+                    visto = True
+                    
+                
+                except:
+                    visto = False
+                comentarios_data["visto"]=visto
                 lista.append(comentarios_data)
             lista.append({"count": post.get_comment_count})
 
@@ -95,7 +104,7 @@ class PostDetailView(DetailView):
             comentarios_data['user'] = i.user.username
             comentarios_data['content'] = i.content
             comentarios_data["time"] = i.timestamp
-
+            
             lista.append(comentarios_data)
         lista.append({"count": post.get_comment_count})
         # DjangoJSONEncoder es necesario para poder serializar fechas
@@ -129,7 +138,7 @@ class PostDetailView(DetailView):
             dia_view = fecha_view.date()
             # print(dia_view)
             fecha_actual = datetime.utcnow().date()
-            print(fecha_actual)
+            #print(fecha_actual)
             # print(fecha_actual)
             diferencia = fecha_actual-dia_view
             # print(diferencia)
@@ -162,6 +171,37 @@ class PostDetailView(DetailView):
                 self.marcar_view(object)
 
         return object
+        
+def setCommentView(request,id):
+    #print("Hola")
+    #visto = False
+    lista = []
+    #print(request.user.is_authenticated)
+    if request.user.is_authenticated:
+
+        if request.is_ajax():
+            print("Es ajax")
+            try:
+                comment = Comment.objects.filter(id=id)[0]
+                commentView = CommentView.objects.filter(comment=comment,user=request.user)[0]
+                print("Ya hay una vista")
+                visto = True
+                
+            except:
+                comment = Comment.objects.filter(id=id)[0]
+                commentView = CommentView.objects.create(comment=comment,user=request.user)
+
+    else:
+        visto = True
+
+    print(visto)
+
+    dic = {}
+    dic["visto"] = visto
+    lista.append(dic)  
+    data = json.dumps(lista)     
+    return HttpResponse(data,'application/json')
+
 
 
 class PostCreateView(CreateView):
@@ -291,6 +331,5 @@ def like(request, slug):
         data = json.dumps([{"activo":"False"}])
         #print(data)
         return HttpResponse(data, 'application/json')
-        
 
 

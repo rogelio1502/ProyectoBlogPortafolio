@@ -1,8 +1,6 @@
-
-actualizarComentarios()
-
-
-
+//const music = new Audio('/holamundo.wav');
+setInterval(checkComentarios, 1000)
+actualizarComentarios();
 function getComentarios() {
 
     $.ajax({
@@ -21,18 +19,18 @@ function getComentarios() {
         console.log("ERROR");
         // console.log("Al obtener datos")
         console.log(data);
-    }).complete(function(data){
+    }).complete(function (data) {
         console.log("REQUEST COMPLETE.")
     })
 
-    
+
 }
 var comentarios;
 function checkComentarios() {
 
     // console.log(comentarios)
     // console.log("DONe")
-    
+
     let csrftoken = getCookie('csrftoken');
     if (comentarios !== undefined) {
         $.ajax({
@@ -59,19 +57,54 @@ function checkComentarios() {
             } else {
                 console.log("Actualizando comentarios");
                 actualizarComentarios()
+                
+                //music.play();
+                document.getElementById('audio').volume=0.5;
+
+                document.getElementById('audio').play();
+
+                
+                
 
             } getComentarios()
         }).error(function (data) {
             console.log("ERROR");
             console.log(data);
-        }).complete(function(data){
+        }).complete(function (data) {
             console.log("REQUEST COMPLETE.")
+            //music.play();
         })
     } else {
         getComentarios();
     }
 
 }
+
+const getTimeAgo = (postDate) => {
+    let fecha = new Date(postDate)
+    let fecha_actual = Date.now()
+
+
+    let new_fecha = new Date(fecha_actual)
+    let diferencia = (new_fecha - fecha) / 1000 / 60
+    // console.log(Math.ceil(diferencia));
+    if (Math.ceil(diferencia) <= 1) {
+        fecha = "Just now"
+    }
+    if (diferencia > 1 && diferencia < 60) {
+        fecha = Math.round(diferencia) + " minutes ago";
+    } else if (Math.round(Math.ceil(diferencia) / 60) == 1) {
+        fecha = "1 hour ago";
+
+    } else if (diferencia > 60 && diferencia < (60 * 24)) {
+        fecha = Math.round(Math.ceil(diferencia) / 60) + " hours ago";
+
+    } else if (diferencia > (60 * 24)) {
+        fecha = Math.round(Math.ceil(diferencia) / (60 * 24)) + " days ago";
+
+    }
+    return fecha;
+};
 
 
 function actualizarComentarios() {
@@ -83,62 +116,60 @@ function actualizarComentarios() {
         cache: false
 
     }).done(function (data) {
-        var com_ajax =document.getElementById("comentariosbyajax");
+        
+        var com_ajax = document.getElementById("comentariosbyajax");
+        com_ajax.innerHTML="";
         com_ajax.innerHTML = "";
         document.getElementById("count_comentarios").innerHTML = "";
-        //console.log(data.length)
+        // console.log(data.length)
         for (let i = 0; i < data.length - 1; i++) {
-            let fecha = new Date(data[i].time)
-            let recien = 0;
-            let fecha_actual = Date.now()
-            
 
-            let new_fecha = new Date(fecha_actual)
-            let diferencia = (new_fecha-fecha)/1000/60
-            console.log(Math.ceil(diferencia));
-            if (Math.ceil(diferencia)<=1){
-                fecha = "Just now"
-            }
-            if (diferencia>1 && diferencia<60){
-                fecha = Math.round(diferencia)+" minutes ago";
-            }else if(Math.round(Math.ceil(diferencia)/60)==1){
-                fecha = "1 hour ago";
+            console.log(data[i].visto)
+            com_ajax.innerHTML += "<div  class='comentarios' ><h5>" + data[i].user.toUpperCase() + "</h5><p id='comentario' data-id='" + data[i].id_comentario + "'>" + data[i].content + "<br></p></div>"
 
-            }else if(diferencia>60 && diferencia<(60*24)){
-                fecha = Math.round(Math.ceil(diferencia)/60)+" hours ago";
+            // if (data[i].visto===false){
+            //    com_ajax.innerHTML += "<div  class='comentarios nuevo' ><h5>"+data[i].user.toUpperCase()+"</h5><p id='comentario' data-id='"+data[i].id_comentario+"'>"+data[i].content+"<br></p></div>"
 
-            }
-            
-            
-            //fecha = new Date(data[i].time).toUTCString();
-            
-            //fecha_actual = new Date(fecha_actual).toUTCString();
 
-            //console.log(fecha)
-            // console.log(data[i].id_comentario+"|"+data[i].user+"|"+new Date(data[i].time).toUTCString()+"|");
-            // console.log(fecha_actual);
-            // console.log(data[i].content)
-            if (Math.ceil(diferencia)<=1){
-                com_ajax.innerHTML += "<div class='comentarios nuevo'><h5>"+data[i].user.toUpperCase()+"</h5><p>"+data[i].content+"<br></p><p class='fecha'><small>"+fecha+"</small></p></div>"
+            // }
+            // else{
+            // com_ajax.innerHTML += "<div  class='comentarios'  ><h5>"+data[i].user.toUpperCase()+"</h5><p id='comentario' data-id='"+data[i].id_comentario+"'>"+data[i].content+"<br></p></div>"
 
-            }else{
-                com_ajax.innerHTML += "<div class='comentarios'><h5>"+data[i].user.toUpperCase()+"</h5><p>"+data[i].content+"<br></p><p class='fecha'><small>"+fecha+"</small></p></div>"
-
-            }
-
-            
-
+            // }
+            com_ajax.innerHTML += "<p class='fecha'><small id='comentario" + data[i].id_comentario + "'>"+getTimeAgo(data[i].time)+"</small></p>"
+            setInterval(() => {
+                document.getElementById("comentario" + data[i].id_comentario).innerHTML = getTimeAgo(data[i].time);
+            }, 1000);
 
 
         }
-        document.getElementById("count_comentarios").innerHTML = '<i class="fas fa-comments ml-5"></i>' + data[data.length-1].count;
+        document.getElementById("count_comentarios").innerHTML = '<i class="fas fa-comments ml-5"></i>' + data[data.length - 1].count;
 
 
     }).error(function (data) {
         console.log("ERROR");
         console.log(data);
-    }).complete(function(data){
+    }).complete(function (data) {
         console.log("REQUEST COMPLETE.")
     })
 }
 
+
+$('#formulario').on('submit', function (e) {
+    e.preventDefault();
+    console.log($(this).serialize());
+    console.log($(this).attr('action'));
+    let url = $(this).attr('action');
+    $.ajax({url: url, type: "POST", data: $(this).serialize(), dataType: 'json'}).done(function (data) {
+        // console.log(data);
+        document.getElementById("formulario").reset();
+        actualizarComentarios();
+
+    }).error(function (data) {
+        console.log("ERROR");
+        console.log(data);
+    }).complete(function (data) {
+        console.log("REQUEST COMPLETE.")
+    })
+
+});

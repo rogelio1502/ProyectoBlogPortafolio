@@ -3,7 +3,7 @@ from .base import *
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['djangored.herokuapp.com',"localhost"]
+ALLOWED_HOSTS = ['djangored.herokuapp.com',"*"]
 
 
 # Database
@@ -12,10 +12,10 @@ ALLOWED_HOSTS = ['djangored.herokuapp.com',"localhost"]
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd2h3n5pakkup4u',
-        'USER':'ayydxznbdwlzcs',
-        'PASSWORD':'f9c9c336d4b20ad0254328a6d929dd56394e6814c30ecfe19b20d566440835fb',
-        'HOST':'ec2-34-194-130-103.compute-1.amazonaws.com',
+        'NAME': os.getenv('NAME'),
+        'USER':os.getenv('USER'),
+        'PASSWORD':os.getenv('PASSWORD'),
+        'HOST':os.getenv('HOST'),
         'PORT':'5432'
     }
 }

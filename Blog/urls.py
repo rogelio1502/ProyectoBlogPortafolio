@@ -17,6 +17,7 @@ from posts.views import (
     PostDeleteView,
     PostUpdateView,
     like,
+    setCommentView,
     
 
     
@@ -45,6 +46,8 @@ urlpatterns = [
     path('users/<slug>/',UserDetailView.as_view(),name="user"),
     path('<slug>/update/',PostUpdateView.as_view(),name="update"),
     path('<slug>/delete/',PostDeleteView.as_view(),name="delete"),
+    path('comentarios/<id>/',setCommentView,name="setView"),
+
     path('like/<slug>/',like,name="like"),
 ]
 urlpatterns+=static(STATIC_URL, document_root=STATIC_ROOT)

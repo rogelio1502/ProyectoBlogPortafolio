@@ -2,8 +2,12 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
+
     <div class="row" id="detail_view_post" data-id="{{object.id}}">
+        <audio id="audio" controls hidden >
+            <source src="{% static 'js/comentarios/mixkit-positive-notification-951.wav' %}" type="audio/wav">
         
+          </audio>
         <div class="col">
 
 
@@ -104,11 +108,9 @@
                     {% endfor %}</div>
                     -->
                     <div >
-                        <h5>
-                            Comments By AJAX
-                        </h5>
+                        
                         <div id="comentariosbyajax">
-
+                            Cargando Comentarios...
                         </div>
 
                     </div>

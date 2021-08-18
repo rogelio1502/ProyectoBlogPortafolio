@@ -22,11 +22,27 @@ body{
     font-style: italic;
 }
 .nuevo{
-    background-color: rgb(73, 114, 161);
-    color: white;
+    background-color: aqua;
+}
+@keyframes slidein {
+    from{
+        margin-left: 100% ;
+        width: 300%;
+    }
+    to {
+        margin-left: 0%;
+        width: 100%;
+      }
 }
 .preview{
     background-color: rgb(246, 240, 240);
     padding: 10px;
     font-weight: bold;
+}
+/*p[title*="capítulo"]*/
+.fecha small{
+    padding-left:  15px;
+}
+#comentariosbyajax{
+    padding: 10px;
 }

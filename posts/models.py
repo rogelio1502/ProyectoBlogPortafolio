@@ -56,6 +56,16 @@ class Comment(models.Model):
     def __str__(self):
         return self.user.username
     
+
+class CommentView(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment,on_delete=models.CASCADE)
+
+    
+
+
+
+
 class PostView(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     user_2 = models.CharField(max_length=7,null=True)
@@ -70,6 +80,8 @@ class Like(models.Model):
     post = models.ForeignKey(Post,on_delete=models.CASCADE)
     def __str__(self):
         return self.user.username
+
+
     
 
 

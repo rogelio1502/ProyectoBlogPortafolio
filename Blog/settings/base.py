@@ -20,7 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'j2_=692-un_a0++*1ryp(2a6qo#%px@z^f7v1e=m4#srah5k6t'
+
+#SECRET_KEY = 'j2_=692-un_a0++*1ryp(2a6qo#%px@z^f7v1e=m4#srah5k6t'
+SECRET_KEY = os.getenv('SECRET_KEY')
+
 
 
 # Application definition
@@ -140,8 +143,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media_root')
 
 
 ######
-AWS_ACCESS_KEY_ID = 'AKIA5KE2CNCPKY7FUQHQ'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY =os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME= 'django-images-storage-rtp'
 STATIC_URL = "/static/"
 STATICFILES_DIRS=(
