@@ -7,10 +7,19 @@ from django.views import generic
 from django.contrib.auth.views import LoginView,PasswordChangeForm,PasswordChangeView,PasswordChangeDoneView
 from django.views.generic import ListView, DetailView
 from .models import User,UserManager
+from posts.views import SearchForm
 
 
 class PasswordChangeDoneView(PasswordChangeDoneView):
     template_name = 'registration/change_done.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            
+            'search_form': SearchForm()
+        })
+        #print(context)
+        return context
 
 
 
@@ -19,6 +28,14 @@ class PasswordChangeDoneView(PasswordChangeDoneView):
 class PasswordChangeView(PasswordChangeView):
     form_class = PasswordChangeForm
     template_name = 'registration/change.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            
+            'search_form': SearchForm()
+        })
+        #print(context)
+        return context
     
 
 
@@ -27,6 +44,14 @@ class SignUpView(generic.CreateView):
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            
+            'search_form': SearchForm()
+        })
+        #print(context)
+        return context
     def get(self, request, *args, **kwargs):
 
         if request.user.is_authenticated:
@@ -39,6 +64,14 @@ class SignUpView(generic.CreateView):
     
 
 class LoginView(LoginView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            
+            'search_form': SearchForm()
+        })
+        #print(context)
+        return context
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             #super().get(request, *args, **kwargs)
@@ -48,9 +81,18 @@ class LoginView(LoginView):
             return super().get(request, *args, **kwargs)
 
 
+
 class UserListView(ListView):
     model = User
     template_name = 'users/user_list.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            
+            'search_form': SearchForm()
+        })
+        #print(context)
+        return context
     """
     def get_context_data(self, *args, object_list=None, **kwargs):
         context = super().get_context_data(
@@ -89,3 +131,12 @@ class UserListView(ListView):
 class UserDetailView(DetailView):
     model = User
     template_name = 'users/user_detail.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            
+            'search_form': SearchForm()
+        })
+        #print(context)
+        return context
+   

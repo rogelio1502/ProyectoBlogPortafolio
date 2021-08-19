@@ -108,9 +108,9 @@
         </li>
       {% endif %}
       </ul>
-      <form class="d-flex" method="POST" >
+      <form class="d-flex" method="POST" action="{% url 'list' %}" >
         {% csrf_token %}
-        {{form|crispy}}
+        {{search_form|crispy}}
         <button class="btn btn-success h-50 my-4" type="submit"><i class="fas fa-search"></i></button>
       </form>
     </div>

@@ -27,7 +27,7 @@ class PostListView(ListView):
         context = super().get_context_data(**kwargs)
         # agregamos dos claves al contexto original
         context.update({
-            'form': SearchForm()
+            'search_form': SearchForm()
             
         })
         return context
@@ -41,7 +41,7 @@ class PostListView(ListView):
             print(criterio)
             posts = Post.objects.filter(title__icontains=criterio)
             print(posts)
-        return render(request,'posts/post_list.html',{'object_list':posts,'form':SearchForm})
+        return render(request,'posts/post_list.html',{'object_list':posts,'search_form':SearchForm})
 
 
 
@@ -61,7 +61,8 @@ class PostDetailView(DetailView):
         # agregamos dos claves al contexto original
         context.update({
             'form': CommentForm(),
-            'object': self.object
+            'object': self.object,
+            'search_form': SearchForm()
         })
         return context
 
@@ -276,7 +277,8 @@ class PostCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'view_type': 'create'
+            'view_type': 'create',
+            'search_form': SearchForm()
         })
         return context
     def get(self, request, *args, **kwargs):
@@ -296,7 +298,8 @@ class PostUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         context.update({
             'view_type': 'update',
-            'objeto': self.get_object()
+            'objeto': self.get_object(),
+            'search_form': SearchForm()
         })
         #print(context)
         return context
@@ -309,6 +312,14 @@ class PostUpdateView(UpdateView):
 class PostDeleteView(DeleteView):
     model = Post
     success_url = '/'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            
+            'search_form': SearchForm()
+        })
+        #print(context)
+        return context
 
 
 
