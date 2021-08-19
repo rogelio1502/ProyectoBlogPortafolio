@@ -11,30 +11,33 @@
                         
                         <div class="card-body">
                             <a class="title-href" href="{{object.get_absolute_url}}" >
-                                <h5 class="card-title text-center">-{{object.title}}- <span>by {{object.author}}</span> </h5>
-
+                                <h5 class="card-title text-center">{{object.title}}  </h5>
+                                {% if object.thumbnail %}
+                                <img src="{{object.thumbnail.url}}" class="card-img mt-2 mb-2" style="text-align:center; width:33%; height:auto; display:block;margin:auto;">
+                                {% endif %}
                             </a>
-                            {% if object.thumbnail %}
-                            <img src="{{object.thumbnail.url}}" class="card-img mt-2 mb-2" style="text-align:center; width:33%; height:auto; display:block;margin:auto;">
-                            {% endif %}
-
-                          <p class="card-text preview">{{object.content|truncatechars:50}}</p>
                             
-                          <hr>
-                          <p>
-                            <span>
-                                <button class="text-muted like" data-url="{{object.get_like_url}}">
-                                    <i class="fas fa-thumbs-up" id="{{object.id}}"> {{object.get_like_count}} </i>
-                                </button>
-                            </span>
-                            <br>
-                            <span><i class="fas fa-eye"></i>{{object.get_view_count}}</span>
-                            <span><i class="fas fa-comments ml-5"></i>{{object.get_comment_count}}</span>
+                            <h6>
+                                by<a class="href" id="author-link" href="/users/{{object.author}}/"> {{object.author}}</a>
+
+                            </h6>
+                            <p class="card-text preview">{{object.content|truncatechars:50}}</p>
+                            
+                            <hr>
+                            <p>
+                                <span>
+                                    <button class="text-muted like" data-url="{{object.get_like_url}}">
+                                        <i class="fas fa-thumbs-up" id="{{object.id}}"> {{object.get_like_count}} </i>
+                                    </button>
+                                </span>
+                                <br>
+                                <span><i class="fas fa-eye"></i>{{object.get_view_count}}</span>
+                                <span><i class="fas fa-comments ml-5"></i>{{object.get_comment_count}}</span>
                             <!--<span><i class="fas fa-thumbs-up ml-5"></i>{{object.get_like_count}}</span>
                             <span><i class="fas fa-eye ml-5"></i>{{object.get_view_count}}</span>
                             <span><i class="fas fa-comments ml-5"></i>{{object.get_comment_count}}</span>-->
                             
-                          </p>
+                            </p>
                             <p class="card-text">
                                 Posted {{object.publish_date|timesince}} ago
                             </p>

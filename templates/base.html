@@ -71,9 +71,21 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{%  url 'user' request.user.username %}">Perfil</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{%  url 'logout' %}">Salir</a>
-        </li>
+        <div class="dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            Settings
+          </a>
+        
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="{% url 'password_change' %}">Change My Password</a></li>
+            <li>
+              <a class="dropdown-item" aria-current="page" href="{%  url 'logout' %}">Salir</a>
+            </li>
+          </ul>
+        </div>
+        
+        
+
         {% else %}
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{%  url 'login' %}">Entrar</a>

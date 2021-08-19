@@ -2,10 +2,27 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-6">
-            <h3>
-                {{object.username}}
-            </h3>
+        <div class="col-md-12 ">
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img class="img-fluid rounded-start" src="{{object.imagen_perfil.url}}" >
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                          <h5 class="card-title">{{object.username}}</h5>
+                          <p class="card-text">Here is gonna be a little description about the user</p>
+                          <p class="card-text"><small class="text-muted">And here im gonna print user's signed time </small></p>
+                        </div>
+                      </div>
+                    
+                </div>
+                
+                
+            
+
+            </div>
+
         </div>
     </div>
 {% endblock content %}

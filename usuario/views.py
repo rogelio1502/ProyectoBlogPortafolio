@@ -4,9 +4,22 @@ from django.shortcuts import render,redirect
 from usuario.forms import UserCreation
 from django.urls import reverse_lazy
 from django.views import generic
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView,PasswordChangeForm,PasswordChangeView,PasswordChangeDoneView
 from django.views.generic import ListView, DetailView
 from .models import User,UserManager
+
+
+class PasswordChangeDoneView(PasswordChangeDoneView):
+    template_name = 'registration/change_done.html'
+
+
+
+
+
+class PasswordChangeView(PasswordChangeView):
+    form_class = PasswordChangeForm
+    template_name = 'registration/change.html'
+    
 
 
 class SignUpView(generic.CreateView):

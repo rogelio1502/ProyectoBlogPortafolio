@@ -40,7 +40,10 @@
                 {% if object.thumbnail %}
                 <img src="{{object.thumbnail.url}}" style="width: 50%;" class="card-img-top align-self-center" >
                 {% endif %}
-               
+                <h6>
+                    by<a class="href" id="author-link" href="/users/{{object.author}}/"> {{object.author}}</a>
+
+                </h6>
                 <hr>
                 <div>
                     <span><i class="fas fa-thumbs-up ml-5"></i>{{object.get_like_count}}</span>

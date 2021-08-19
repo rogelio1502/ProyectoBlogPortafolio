@@ -46,3 +46,8 @@ body{
 #comentariosbyajax{
     padding: 10px;
 }
+#author-link{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
