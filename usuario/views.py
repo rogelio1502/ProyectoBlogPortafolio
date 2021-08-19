@@ -11,7 +11,7 @@ from posts.views import SearchForm
 
 
 class PasswordChangeDoneView(PasswordChangeDoneView):
-    template_name = 'registration/change_done.html'
+    template_name = 'accounts/change_done.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
@@ -27,7 +27,7 @@ class PasswordChangeDoneView(PasswordChangeDoneView):
 
 class PasswordChangeView(PasswordChangeView):
     form_class = PasswordChangeForm
-    template_name = 'registration/change.html'
+    template_name = 'accounts/change.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
@@ -42,7 +42,7 @@ class PasswordChangeView(PasswordChangeView):
 class SignUpView(generic.CreateView):
     form_class = UserCreation
     success_url = reverse_lazy('login')
-    template_name = 'registration/signup.html'
+    template_name = 'accounts/signup.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
