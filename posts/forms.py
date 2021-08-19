@@ -1,6 +1,10 @@
 from django import forms
 from .models import Post,Comment
 
+class SearchForm(forms.Form):
+    search = forms.CharField(max_length=50)
+
+
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post

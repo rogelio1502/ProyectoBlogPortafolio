@@ -9,15 +9,47 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.core.serializers import serialize
 from .models import *
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm,SearchForm
 
 # Create your views here.
 
 
+
+
+
+
+
+
 class PostListView(ListView):
     model = Post
+    form = SearchForm
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # agregamos dos claves al contexto original
+        context.update({
+            'form': SearchForm()
+            
+        })
+        return context
+
+    def post(self, request, *args, **kwargs):
+        print("En post")
+        form = SearchForm(request.POST)
+        if form.is_valid():
+           
+            criterio = (form.cleaned_data["search"])
+            print(criterio)
+            posts = Post.objects.filter(title__icontains=criterio)
+            print(posts)
+        return render(request,'posts/post_list.html',{'object_list':posts,'form':SearchForm})
 
 
+
+    def get(self, request, *args, **kwargs):
+        
+
+
+        return super().get(request, *args, **kwargs)
 
     
 class PostDetailView(DetailView):

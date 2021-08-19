@@ -3,6 +3,8 @@
 <html lang="en">
   <head>
     {% load static %}
+    {% load crispy_forms_tags %}
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -106,9 +108,10 @@
         </li>
       {% endif %}
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+      <form class="d-flex" method="POST" >
+        {% csrf_token %}
+        {{form|crispy}}
+        <button class="btn btn-success h-50 my-4" type="submit"><i class="fas fa-search"></i></button>
       </form>
     </div>
   </div>
