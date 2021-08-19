@@ -64,6 +64,8 @@ class SignUpView(generic.CreateView):
     
 
 class LoginView(LoginView):
+    template_name = 'accounts/login.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
